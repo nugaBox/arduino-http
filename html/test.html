@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=2.0, user-scalable=yes">
+<meta name="format-detection" content="telephone=no, address=no, email=no">
+<title>Alarm Setting System</title>
+<link href="css/basic.css" rel="stylesheet" type="text/css">
+<link href="css/all.css" rel="stylesheet" type="text/css">
+<link href="css/layout.css" rel="stylesheet" type="text/css">
+</head>
+<body>	
+<div class="wrap">
+	<header class="header_area">
+		<i class="far fa-stopwatch"></i>
+		<p>Alarm Setting System</p>
+		<button class="btn_call"><i class="fas fa-volume-up mr10"></i>바로<span>호출</span></button>
+	</header>
+	<section class="body_area">
+		<form name="dataForm" id="dataForm" action="http://192.168.1.47/" method="GET">
+			<ul class="active_list">
+				<li><input type="checkbox" class="light" id="light01" checked><label for="light01">01</label></li>
+				<li><input type="checkbox" class="light" id="light02" checked><label for="light02">02</label></li>
+				<li><input type="checkbox" class="light" id="light03" checked><label for="light03">03</label></li>
+				<li><input type="checkbox" class="light" id="light04"><label for="light04">04</label></li>
+				<li><input type="checkbox" class="light" id="light05"><label for="light05">05</label></li>
+				<li><input type="checkbox" class="light" id="light06"><label for="light06">06</label></li>
+				<li><input type="checkbox" class="light" id="light07"><label for="light07">07</label></li>
+				<li><input type="checkbox" class="light" id="light08"><label for="light08">08</label></li>
+				<li><input type="checkbox" class="light" id="light09"><label for="light09">09</label></li>
+				<li><input type="checkbox" class="light" id="light10"><label for="light10">10</label></li>
+			</ul>
+			<div class="set_board">
+				<ul class="set_minute">
+					<li><input type="radio" name="set_min" id="set_min01" value="1" checked><label for="set_min01">5 min</label></li>
+					<li><input type="radio" name="set_min" id="set_min02" value="2"><label for="set_min02">10 min</label></li>
+					<li><input type="radio" name="set_min" id="set_min03" value="3"><label for="set_min03">15 min</label></li>
+					<li><input type="radio" name="set_min" id="set_min04" value="4"><label for="set_min04">20 min</label></li>
+				</ul>
+				
+				<ul class="set_sound">
+					<li><input type="checkbox" class="set_all" id="set_all" value="/gpio/5"  onclick="javascript:cAll();"><label for="set_all" id="set_all_label">모두선택</label></li>
+					<li><input type="checkbox" class="set_sd" id="set_sd01" value="/gpio/6" ><label for="set_sd01">음성</label></li>
+					<li><input type="checkbox" class="set_sd" id="set_sd02" value="/gpio/7" ><label for="set_sd02">진동</label></li>
+					<li><input type="checkbox" class="set_sd" id="set_sd03" value="/gpio/8" ><label for="set_sd03">소리</label></li>
+				</ul>
+			</div>
+			<div class="send_wrap">
+				<!-- <input type="submit" class="btn_send" value="전송" onclick="sendData(); return false;" /> -->
+				<input type="submit" class="btn_send" value="전송" />
+			</div>
+		</form>
+	</section>
+</div>
+<script src="js/jquery.min.js"></script>
+<script>
+	function cAll() {
+		if ($("#set_all").is(':checked')) {
+			$(".set_sd").prop("checked", true);
+		} else {
+			$(".set_sd").prop("checked", false);
+		}
+	}
+	function sendData(){
+		var formData = $("#dataForm").serialize() ;
+		console.log(formData);
+		$.ajax({
+			type : 'get',
+			url : 'http://192.168.1.47',
+			data :'1',
+			success : function(data){
+				//var jsonObj = JSON.parse(data);
+				//console.log(jsonObj);
+				alert("success : check console");
+			},
+			error : function(xhr, status) {
+                alert(xhr + " : " + status);
+            }
+		});
+	}
+</script>
+</body>
+</html>
